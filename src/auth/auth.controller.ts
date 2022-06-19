@@ -1,4 +1,4 @@
-import { Body, ClassSerializerInterceptor, Controller, HttpStatus, Post, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, ClassSerializerInterceptor, Controller, Get, HttpStatus, Post, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/decorators/user.decorator';
 import { ErrorResponseException } from 'src/utils/ErrorResponse';
@@ -18,7 +18,7 @@ export class AuthController {
 
     constructor(private authService: AuthService) { }
 
-    @Post('/me')
+    @Get('/me')
     @UseGuards(JwtAuthGuard)
     async profile(@User() tokenModel: IJWTPayload) {
         const user = await this.authService.findUserByUserName(tokenModel.userName)
